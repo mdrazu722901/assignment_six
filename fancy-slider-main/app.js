@@ -24,11 +24,13 @@ const showImages = (images) => {
         div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
         div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
         gallery.appendChild(div)
+        spinnerAdd(false);
     })
 
 }
 
 const getImages = (query) => {
+    spinnerAdd(true);
     fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
         .then(response => response.json())
         .then(data => showImages(data.hits))
@@ -126,8 +128,17 @@ var searchButton = document.getElementById("search-btn");
 var searchText = document.getElementById("search");
 
 searchText.addEventListener("keypress", function(event) {
-    // event.preventDefault();
     if (event.key == 'Enter') {
         searchButton.click();
     }
 });
+
+const spinnerAdd = (show) => {
+    const spinner = document.getElementById("spinner-loading")
+    if (show) {
+        spinner.classList.remove('d-none');
+    } else {
+        spinner.classList.add('d-none');
+    }
+
+}
