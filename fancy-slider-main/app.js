@@ -44,8 +44,7 @@ const selectItem = (event, img) => {
     if (item === -1) {
         sliders.push(img);
     } else {
-        // alert('Hey, Already added !')
-        sliders.push(" ");
+        alert('Hey, Already added !')
     }
 }
 var timer
@@ -56,7 +55,7 @@ const createSlider = () => {
         return;
     }
     // crate slider previous next area
-    sliderContainer.innerHTML = '';
+    sliderContainer.innerText = '';
     const prevNext = document.createElement('div');
     prevNext.className = "prev-next d-flex w-100 justify-content-between align-items-center";
     prevNext.innerHTML = ` 
@@ -68,7 +67,7 @@ const createSlider = () => {
     document.querySelector('.main').style.display = 'block';
     // hide image aria
     imagesArea.style.display = 'none';
-    const duration = document.getElementById('duration').value || 1000;
+    const duration = Math.abs(document.getElementById('duration').value) || 1000;
     sliders.forEach(slide => {
         let item = document.createElement('div')
         item.className = "slider-item";
@@ -119,5 +118,16 @@ searchBtn.addEventListener('click', function() {
 })
 
 sliderBtn.addEventListener('click', function() {
-    createSlider()
-})
+        createSlider()
+    })
+    // enter key for search=======================================
+
+var searchButton = document.getElementById("search-btn");
+var searchText = document.getElementById("search");
+
+searchText.addEventListener("keypress", function(event) {
+    // event.preventDefault();
+    if (event.key == 'Enter') {
+        searchButton.click();
+    }
+});
